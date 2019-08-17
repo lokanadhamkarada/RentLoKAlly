@@ -14,14 +14,8 @@ export class UsersService extends BaseService {
         super(http);
     }
 
-    getUsers(): User[] {
-        let users: User[] = [];
-
-        super.get(super.baseUrl() + this.usersUrl).then((resp) => {
-            users = resp as User[];
-        });
-
-        return users;
+    getUsers() {
+        return super.get(super.baseUrl() + this.usersUrl);
     }
 
     postUser(item) {

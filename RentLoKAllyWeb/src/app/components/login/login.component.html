@@ -6,6 +6,11 @@
         Password : <input type="password" [(ngModel)]="user.Password" />
     </div>
     <div>
-        <button (click)="validateUser()">Log In</button>
+        <button (click)="validateUser()" *progressAware="{progressId: 'login_progress',replace:true, replaceWith: loading}">Log In</button>
     </div>
 </div>
+
+<ng-template #loading>Loading...</ng-template>
+<span *progressAware="{progressId: 'login_progress'}">
+    Loading...
+</span>

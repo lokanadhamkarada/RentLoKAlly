@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
 
     postUser() {
         this.usersService.postUser(this.user).then((resp) => {
-
+            this.user = new User();
         });
     }
 }

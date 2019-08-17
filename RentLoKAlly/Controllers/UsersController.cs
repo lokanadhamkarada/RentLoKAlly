@@ -13,7 +13,7 @@ using RentLoKAlly.Models;
 
 namespace RentLoKAlly.Controllers
 {
-    public class UsersController : ApiController
+    public class UsersController : BaseController
     {
         private RentLoKAllyEntities db = new RentLoKAllyEntities();
 
