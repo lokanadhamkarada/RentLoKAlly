@@ -1,34 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Component, Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
 
-const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
-    'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
-    'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
-    'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
-    'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-    'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island',
-    'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
-    'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+const WIKI_URL = 'https://en.wikipedia.org/w/api.php';
+
+@Injectable()
+export class WikipediaService {
+    constructor(private http: Http) { }
+
+    search(term: string) {
+        if (term === '') {
+            return of([]);
+        }
+
+        return this.http.get(WIKI_URL, { params: { action: 'opensearch', format: 'json', origin: '*', search: term } }).pipe(map(response => response[1]));
+    }
+}
 
 @Component({
     selector: 'app-search',
     templateUrl: './search.component.html',
+    providers: [WikipediaService],
     styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
-    public model: any;
+export class SearchComponent {
+    model: any;
+    searching = false;
+    searchFailed = false;
 
-    constructor() { }
-
-    ngOnInit() {
-    }
+    constructor(private _service: WikipediaService) { }
 
     search = (text$: Observable<string>) =>
         text$.pipe(
-            debounceTime(200),
+            debounceTime(300),
             distinctUntilChanged(),
-            map(term => term.length < 2 ? []
-                : states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+            tap(() => this.searching = true),
+            switchMap(term =>
+                this._service.search(term).pipe(
+                    tap(() => this.searchFailed = false),
+                    catchError(() => {
+                        this.searchFailed = true;
+                        return of([]);
+                    }))
+            ),
+            tap(() => this.searching = false)
         )
 }
