@@ -1,0 +1,20 @@
+<div>
+    <div>
+        First Name : <input type="text" [(ngModel)]="user.FirstName" />
+    </div>
+    <div>
+        Last Name : <input type="text" [(ngModel)]="user.LastName" />
+    </div>
+    <div>
+        Email : <input type="text" [(ngModel)]="user.Email" />
+    </div>
+    <div>
+        User Name : <input type="text" [(ngModel)]="user.UserName" />
+    </div>
+    <div>
+        Password : <input type="password" [(ngModel)]="user.Password" />
+    </div>
+    <div>
+        <button (click)="postUser()">Sign Up</button>
+    </div>
+</div>
