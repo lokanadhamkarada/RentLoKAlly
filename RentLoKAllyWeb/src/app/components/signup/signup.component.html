@@ -1,20 +1,17 @@
-<div>
-    <div>
-        First Name : <input type="text" [(ngModel)]="user.FirstName" />
-    </div>
-    <div>
-        Last Name : <input type="text" [(ngModel)]="user.LastName" />
-    </div>
-    <div>
-        Email : <input type="text" [(ngModel)]="user.Email" />
-    </div>
-    <div>
-        User Name : <input type="text" [(ngModel)]="user.UserName" />
-    </div>
-    <div>
-        Password : <input type="password" [(ngModel)]="user.Password" />
-    </div>
-    <div>
-        <button (click)="postUser()">Sign Up</button>
-    </div>
-</div>
+<app-modal id="custom-modal-2">
+    <h4 style="text-align: center;">Sign Up</h4>
+    <form>
+    <label data-error="wrong" data-success="right" for="Form-FirstName">First Name</label>
+    <input type="text" id="Form-FirstName" class="form-control validate" [(ngModel)]="user.FirstName">
+    <label data-error="wrong" data-success="right" for="Form-LastName">Last Name</label>
+    <input type="text" id="Form-LastName" class="form-control validate" [(ngModel)]="user.LastName">
+    <label data-error="wrong" data-success="right" for="Form-Email">Email</label>
+    <input type="text" id="Form-Email" class="form-control validate" [(ngModel)]="user.Email">
+    <label data-error="wrong" data-success="right" for="Form-UserName">User Name</label>
+    <input type="text" id="Form-UserName" class="form-control validate" [(ngModel)]="user.UserName">
+    <label data-error="wrong" data-success="right" for="Form-pwd">Password</label>
+    <input type="password" id="Form-pwd" class="form-control validate" [(ngModel)]="user.Password">
+    </form>
+    <button (click)="closeModal('custom-modal-2')" style="margin-bottom: 1.5rem;margin-top: 33px;">Close</button>
+    <button (click)="postUser()" class="btn btn-primary" style=" float: right;margin-bottom: 1.5rem;margin-top: 33px;">Registor</button>
+  </app-modal>

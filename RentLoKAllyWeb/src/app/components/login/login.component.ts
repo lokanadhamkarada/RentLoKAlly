@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { UsersService } from '../../services/users.service';
+import { ModalService } from './../../services/modal.service';
 
 @Component({
     selector: 'app-login',
@@ -12,11 +13,18 @@ import { UsersService } from '../../services/users.service';
 export class LoginComponent implements OnInit {
     @Input() user: User = new User();
 
-    constructor(private usersService: UsersService, private router: Router) { }
+    constructor(private usersService: UsersService, private router: Router, private modalService: ModalService) { }
+
 
     ngOnInit() {
     }
+    openModal(id: string) {
+      this.modalService.open(id);
+  }
 
+  closeModal(id: string) {
+      this.modalService.close(id);
+  }
     validateUser() {
         this.usersService.getUsers().then((resp) => {
             let users = resp as User[];
