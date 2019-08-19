@@ -5,5 +5,5 @@
   <label data-error="wrong" data-success="right" for="Form-pass1">Password</label>
   <input type="password" id="Form-pass1" class="form-control validate" [(ngModel)]="user.Password">
   <button (click)="closeModal('custom-modal-1')" style="margin-bottom: 1.5rem;margin-top: 33px;">Close</button>
-  <button (click)="validateUser()" *progressAware="{progressId: 'login_progress',replace:true, replaceWith: loading}" class="btn btn-primary" style=" float: right;margin-bottom: 1.5rem;margin-top: 33px;">Login</button>
+  <button (click)="validateUser()" class="btn btn-primary" style=" float: right;margin-bottom: 1.5rem;margin-top: 33px;">Login</button>
 </app-modal>

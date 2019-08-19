@@ -14,6 +14,8 @@ const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'C
 
 const products = ['Hammer' , 'Screw Driver' , 'Drilling Machine' , 'Wrench'];
 
+const miles = ['5' , '10' , '15' , '30' , '50' , '80' , '100'];
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -24,6 +26,7 @@ export class SearchComponent {
   public model: any;
   public modelState: any;
   public modelProduct: any;
+  public modelDistance: any;
   constructor(config: NgbTypeaheadConfig) {
     // customize default values of typeaheads used by this component tree
     config.showHint = true;
@@ -43,5 +46,13 @@ export class SearchComponent {
       distinctUntilChanged(),
       map(term => term.length < 2 ? []
         : states.filter(v => v.toLowerCase().startsWith(term.toLocaleLowerCase())).splice(0, 10))
+    )
+
+    mile = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 1 ? []
+        : miles.filter(v => v.toLowerCase().startsWith(term.toLocaleLowerCase())).splice(0, 10))
     )
 }
