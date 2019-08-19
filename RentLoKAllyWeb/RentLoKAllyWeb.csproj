@@ -112,6 +112,8 @@
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\assets\Images\banner.jpg" />
+    <Content Include="src\assets\Images\logo.jpg" />
     <Content Include="tsconfig.app.json" />
     <Content Include="tsconfig.json" />
     <Content Include="tsconfig.spec.json" />
