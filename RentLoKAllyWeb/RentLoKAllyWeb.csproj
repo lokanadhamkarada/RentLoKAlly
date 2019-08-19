@@ -118,6 +118,7 @@
     <Content Include="tsconfig.json" />
     <Content Include="tsconfig.spec.json" />
     <Content Include="tslint.json" />
+    <Content Include="src\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
