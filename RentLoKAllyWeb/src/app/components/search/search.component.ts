@@ -1,49 +1,47 @@
-import { Component, Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
+import {Component} from '@angular/core';
+import {Observable} from 'rxjs';
+import {NgbTypeaheadConfig} from '@ng-bootstrap/ng-bootstrap';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
-const WIKI_URL = 'https://en.wikipedia.org/w/api.php';
+const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
+  'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
+  'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+  'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
+  'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island',
+  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
+  'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
-@Injectable()
-export class WikipediaService {
-    constructor(private http: Http) { }
-
-    search(term: string) {
-        if (term === '') {
-            return of([]);
-        }
-
-        return this.http.get(WIKI_URL, { params: { action: 'opensearch', format: 'json', origin: '*', search: term } }).pipe(map(response => response[1]));
-    }
-}
+const products = ['Hammer' , 'Screw Driver' , 'Drilling Machine' , 'Wrench'];
 
 @Component({
-    selector: 'app-search',
-    templateUrl: './search.component.html',
-    providers: [WikipediaService],
-    styleUrls: ['./search.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styles: [`.form-control { width: 300px; }`],
+  providers: [NgbTypeaheadConfig] // add NgbTypeaheadConfig to the component providers
 })
 export class SearchComponent {
-    model: any;
-    searching = false;
-    searchFailed = false;
+  public model: any;
+  public modelState: any;
+  public modelProduct: any;
+  constructor(config: NgbTypeaheadConfig) {
+    // customize default values of typeaheads used by this component tree
+    config.showHint = true;
+  }
 
-    constructor(private _service: WikipediaService) { }
+  product = (text$: Observable<string>) =>
+  text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map(term => term.length < 2 ? []
+      : products.filter(v => v.toLowerCase().startsWith(term.toLocaleLowerCase())).splice(0, 10))
+  )
 
-    search = (text$: Observable<string>) =>
-        text$.pipe(
-            debounceTime(300),
-            distinctUntilChanged(),
-            tap(() => this.searching = true),
-            switchMap(term =>
-                this._service.search(term).pipe(
-                    tap(() => this.searchFailed = false),
-                    catchError(() => {
-                        this.searchFailed = true;
-                        return of([]);
-                    }))
-            ),
-            tap(() => this.searching = false)
-        )
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 2 ? []
+        : states.filter(v => v.toLowerCase().startsWith(term.toLocaleLowerCase())).splice(0, 10))
+    )
 }

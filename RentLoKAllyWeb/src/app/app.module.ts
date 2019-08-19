@@ -1,4 +1,3 @@
-import { OptionComponent } from './components/autocomplete/option/option.component';
 import { ModalComponent } from './components/Modal/modal.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -7,12 +6,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TypeaheadModule } from 'ngx-type-ahead';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
-import { FilterPipe } from './components/filter.pipe';
-import { AutocompleteModule } from './components/autocomplete/autocomplete.module';
-import { OverlayModule } from '@angular/cdk/overlay';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -39,7 +32,7 @@ import { from } from 'rxjs';
         AlertComponent,
         SearchComponent,
         ModalComponent,
-        AutocompleteComponent,
+
     ],
     imports: [
         BrowserModule,
@@ -52,12 +45,11 @@ import { from } from 'rxjs';
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         ProgressModule,
         TypeaheadModule,
-        OverlayModule,
-        AutocompleteModule,
+        NgbModule,
 ],
     schemas: [NO_ERRORS_SCHEMA],
     providers: [],
-    bootstrap: [AppComponent],
-    entryComponents:[AutocompleteComponent]
+    exports: [SearchComponent],
+    bootstrap: [AppComponent,SearchComponent],
 })
 export class AppModule { }
