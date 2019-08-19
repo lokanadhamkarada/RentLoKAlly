@@ -130,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="3rdpartylicenses.txt" />
+    <Content Include="assets\Images\banner.jpg" />
+    <Content Include="assets\Images\logo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />

@@ -5,4 +5,15 @@ body, html {
      height:40em; background-size:cover; width:auto;
      background-position:50% 50%;
      background-repeat : no-repeat;
-   }
+     background-image : url("/assets/Images/banner.jpg");
+     height: 100vh;
+     min-height: 680px;
+    }
+
+    .logo{
+      height: 60px;
+      float: left;
+      margin-top:20px;
+      margin-left: 54px;
+      background-image : url("/assets/Images/logo.jpg");
+    }
