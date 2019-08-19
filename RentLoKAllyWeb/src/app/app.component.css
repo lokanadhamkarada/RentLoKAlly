@@ -2,7 +2,7 @@ body, html {
   height: 100%;
 }
 .image{
-     height:40em; background-size:cover; width:auto;
+    background-size:cover; width:auto;
      background-position:50% 50%;
      background-repeat : no-repeat;
      background-image : url("/assets/Images/banner.jpg");
